@@ -1,4 +1,4 @@
-## Spring Boot Example
+## C# Example
 
 This is a basic example of how to use C# core by clean architecture. See the [accompanying tutorial](https://docs.microsoft.com/pt-br/aspnet/core/tutorials/first-web-api?view=aspnetcore-5.0&tabs=visual-studio-code)
 for more information.
