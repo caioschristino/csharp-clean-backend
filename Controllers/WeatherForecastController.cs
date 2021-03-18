@@ -11,8 +11,7 @@ namespace clean_sharp.Controllers
     [Route("[controller]")]
     public class WeatherForecastController : BaseController
     {
-        private readonly Lazy<LandingUseCase> fetcher = new Lazy<LandingUseCase>(() => LandingGatewayInjector.Instancia.fetch)
-
+        private readonly Lazy<LandingUseCase> fetcher = new Lazy<LandingUseCase>(() => LandingGatewayInjector.Instancia.fetch);
         public Landing doFetch()
         {
             return processUseCase<Void, Landing>(null, LandingGatewayInjector.Instancia.fetch).value;
