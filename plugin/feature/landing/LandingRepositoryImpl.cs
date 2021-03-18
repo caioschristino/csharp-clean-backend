@@ -1,18 +1,34 @@
-using System.Collections.Generic;
+using System.Net.Http;
+using Refit;
 
 namespace clean_sharp
 {
-    class LandingRepositoryImpl : LandingRepository
+    class LandingRepositoryImpl : BaseRepository, LandingRepository
     {
+        protected string baseUrl { get; set; }
+
+        public LandingRepositoryImpl(string baseUrl)
+        {
+            this.baseUrl = baseUrl;
+        }
+
         public Landing doFetch()
         {
-            List<Pokemon> pokemon = new List<Pokemon>();
-            pokemon.Add(new Pokemon("1", "Teste 1"));
-            pokemon.Add(new Pokemon("2", "Teste 2"));
-            pokemon.Add(new Pokemon("3", "Teste 3"));
-            pokemon.Add(new Pokemon("4", "Teste 4"));
+             var service = RestService.For<PokedexAPI>(baseUrl);
 
-            return new Landing(1, "TEST", pokemon);
+            var httpclient = new HttpClient(){
+                BaseAddress = new System.Uri(baseUrl)
+            };
+            var result = httpclient.GetStringAsync("pokemon")
+                .GetAwaiter().GetResult;
+                        
+            return result;
+        }
+
+        public override PokedexAPI getService()
+        {
+            return new PokedexAPIBuilder(baseUrl)
+            .build();
         }
     }
 }

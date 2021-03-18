@@ -8,7 +8,7 @@ namespace clean_sharp
 
         public static void Main(string[] args)
         {
-            LandingGatewayInjector.Instancia.fetch = new LandingUseCase(new LandingRepositoryImpl());
+            LandingGatewayInjector.Instancia.fetch = new LandingUseCase(new LandingRepositoryImpl("https://pokeapi.co/api/v2/"));
             CreateHostBuilder(args).Build().Run();
         }
 

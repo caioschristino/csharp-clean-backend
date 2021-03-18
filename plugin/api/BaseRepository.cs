@@ -1,24 +1,41 @@
-abstract class BaseRepository {
-    string baseUrl;
+using System.Threading.Tasks;
+using System.Net.Http;
 
+namespace clean_sharp
+{
+    public abstract class BaseRepository
+    {
+        public R getBodyOrThrow<R>(Task<R> call)
+           where R : class
+        {
+            try
+            {
+                var response = execute(call);
+                if (response.IsCompletedSuccessfully)
+                {
+                    return response.Result;
+                }
+                else
+                {
+                    throw new AuthenticationException();
+                }
 
-// protected R getBodyOrThrow<R>(IHttpHandler call)  where R : class {
-//      try {
-//             var response = call.execute()
-//             if (response.isSuccessful) return response.body()
-//             if (response.code() == 401) {
-//                 throw AuthenticationException()
-//             }
-//             throw HttpException(response.code(), response.message())
-//         } catch (e: IOException) {
-//             e.printStackTrace()
-//             throw InternetConnectionException()
-//         }
-//     }
+                // if (response.StatusCode == 401) {
+                //     throw AuthenticationException()
+                // }
+                // throw HttpException(response.code(), response.message())
+            }
+            catch (System.Exception)
+            {
+                throw new InternetConnectionException();
+            }
+        }
+        public abstract PokedexAPI getService();
 
-//     abstract fun getService(interceptors: List<Interceptor> = emptyList()): PokedexAPI
-
-//     internal fun dumbRequest() {
-//         getBodyOrThrow(getService().dumbRequest())
-//     }
+        private async Task<R> execute<R>(Task<R> call)
+            where R : class
+        {
+            return await call;
+        }
+    }
 }

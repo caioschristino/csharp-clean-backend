@@ -1,9 +1,20 @@
-using System.Net.Http;
+using Refit;
 
-class PokedexAPIBuilder : AbstractBuilder<PokedexAPI>
+namespace clean_sharp
 {
-    public PokedexAPIBuilder(string baseUrl, DelegatingHandler interceptor): base(baseUrl, interceptor) {
+    class PokedexAPIBuilder : AbstractBuilder<PokedexAPI>
+    {
+        public PokedexAPIBuilder(string baseUrl) : base(baseUrl)
+        {
 
 
+        }
+
+        public override PokedexAPI build()
+        {
+            var service = RestService
+                    .For<PokedexAPI>(createHttpClient());
+            return service;
+        }
     }
 }
