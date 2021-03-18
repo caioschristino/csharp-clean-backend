@@ -10,41 +10,19 @@ namespace clean_sharp.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class WeatherForecastController : BaseController, LandingRepository
+    public class WeatherForecastController : BaseController
     {
-
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
-
-
-        private readonly Lazy<LandingUseCase> fetcher = new Lazy<LandingUseCase>(() => LandingGatewayInjector.Instancia.fetch);
-
-        private readonly ILogger<WeatherForecastController> _logger;
-
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
-        {
-            _logger = logger;
-        }
+        private readonly Lazy<LandingUseCase> fetcher = new Lazy<LandingUseCase>(() => LandingGatewayInjector.Instancia.fetch)
 
         public Landing doFetch()
         {
-            return processUseCase<Void ,Landing>(null, LandingGatewayInjector.Instancia.fetch).value;
+            return processUseCase<Void, Landing>(null, LandingGatewayInjector.Instancia.fetch).value;
         }
-
-        // [HttpGet]
-        // public IEnumerable<Pokemon> Get()
-        // {
-        //     var process = doFetch();
-        //     return process.results;
-        // }
 
         [HttpGet]
         public IEnumerable<Pokemon> Get()
         {
             var process = doFetch();
-            var rng = new Random();
             return process.results.AsEnumerable();
         }
     }
