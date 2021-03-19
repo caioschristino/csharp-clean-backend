@@ -4,14 +4,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 namespace clean_sharp.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class WeatherForecastController : BaseController, LandingRepository
+    public class WeatherForecastController : BaseController
     {
+<<<<<<< HEAD
         private readonly Lazy<LandingUseCase> fetcher = new Lazy<LandingUseCase>(() => LandingGatewayInjector.Instancia.fetch);
 
         private readonly ILogger<WeatherForecastController> _logger;
@@ -24,6 +24,13 @@ namespace clean_sharp.Controllers
         public Landing doFetch()
         {
             return processUseCase<Void ,Landing>(null, fetcher.Value).value;
+=======
+        private readonly Lazy<LandingUseCase> fetcher = new Lazy<LandingUseCase>(() => LandingGatewayInjector.Self.fetch);
+        
+        public Landing doFetch()
+        {
+            return processUseCase<Void, Landing>(null, LandingGatewayInjector.Self.fetch).value;
+>>>>>>> main
         }
 
         [HttpGet]

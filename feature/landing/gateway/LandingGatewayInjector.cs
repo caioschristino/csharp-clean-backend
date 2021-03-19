@@ -3,10 +3,10 @@
 namespace clean_sharp {
     public sealed class LandingGatewayInjector
     {
-        static LandingGatewayInjector _instancia;
-        public static LandingGatewayInjector Instancia
+        static LandingGatewayInjector _self;
+        public static LandingGatewayInjector Self
         {
-            get { return _instancia ?? (_instancia = new LandingGatewayInjector()); }
+            get { return _self ?? (_self = new LandingGatewayInjector()); }
         }
 
         private LandingGatewayInjector() { }
