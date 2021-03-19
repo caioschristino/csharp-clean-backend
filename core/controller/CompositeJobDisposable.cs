@@ -10,6 +10,7 @@ namespace clean_sharp
         public void Dispose() {
             job.Dispose();
         }
+        
         public void add(Task job) {
             this.job = job;
         }
